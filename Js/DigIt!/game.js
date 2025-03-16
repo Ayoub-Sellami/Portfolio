@@ -531,7 +531,7 @@ function getColorByRarity(rarity) {
   // Convert to integer key (fast bitwise OR truncates decimals)
   const key = (rarity * 100_000_000) | 0;
 
-  // Find nearest lower key (optimized for ordered Map)
+  // Find nearest lower key
   let colorKey = 10; // Default to rarest
   for (const [k] of rarityColorMap) {
     if (key >= k) {
@@ -678,12 +678,12 @@ function getAdjustedOres() {
     if (adjustedRarity > 0.5) {
       adjustedRarity = Math.max(
         0.5,
-        adjustedRarity * (1 - 0.05 * (gameState.luck - 1)) // Reduced from 0.1 to 0.05
+        adjustedRarity * (1 - 0.05 * (gameState.luck - 1)) 
       );
     } else {
       adjustedRarity = Math.min(
         0.5,
-        adjustedRarity * (1 + 0.03 * (gameState.luck - 1)) // Reduced from 0.1 to 0.03
+        adjustedRarity * (1 + 0.03 * (gameState.luck - 1))
       );
     }
 
