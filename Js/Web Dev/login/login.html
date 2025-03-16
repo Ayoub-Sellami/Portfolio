@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="mylogo.webp" type="image/webp" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form id="loginForm" action="export.php" method="POST">
+      <fieldset>
+        <legend>Login</legend>
+        <div id="inputs">
+          <label for="user">Username or Email</label>
+          <input type="text" name="username" id="user" required />
+          <br />
+          <label for="pass">Password</label>
+          <input type="password" name="password" id="pass" required />
+        </div>
+        <br />
+        <a href="sign.html">Create a new account</a>
+        <br />
+        <button type="submit" id="login">Login</button>
+      </fieldset>
+    </form>
+    <script src="script.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="mylogo.webp" type="image/webp" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <form
+      id="myForm"
+      action="store.php"
+      onsubmit="return submitForm()"
+      method="POST"
+    >
+      <fieldset>
+        <legend>Sign Up</legend>
+        <div id="inputs">
+          <label for="user">Username</label>
+          <input type="text" name="username" id="user" required />
+          <br />
+          <label for="mail">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="mail"
+            placeholder="user@exemple.com"
+            required
+          />
+          <br />
+          <label for="pass">Password</label>
+          <input type="password" name="password" id="pass" required />
+        </div>
+        <br />
+        <a href="login.html">Already have an account?</a>
+        <br />
+        <button type="submit" id="sign">Create</button>
+      </fieldset>
+    </form>
+    <script src="script.js" defer></script>
+  </body>
+</html>
