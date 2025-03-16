@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>widget</class>
+ <widget class="QWidget" name="widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>250</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arial Unicode MS</family>
+    <pointsize>10</pointsize>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Convertesseur de base</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #2980b9;
+}
+
+QLineEdit {
+    background-color: #34495e;
+    qproperty-alignment: &quot;AlignCenter&quot;;
+    color: white;
+    border: 2px solid #2980b9;
+    border-radius: 10px;
+    padding: 5px;
+	font-size: 16px;
+}
+
+QLabel {
+    background-color: grey;
+    qproperty-alignment: &quot;AlignCenter&quot;;
+    color: white;
+    border: 2px solid #2980b9;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QMainWindow {
+    background-color: beige;
+}
+
+QComboBox {
+    background-color: #3498db;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+}
+
+QComboBox:hover {
+    background-color: #2980b9;
+}
+
+QComboBox::drop-down {
+    border: none;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #3498db;
+    color: black;
+    selection-background-color: #2980b9;
+    selection-color: white;
+    border: 2px solid #2980b9;
+    border-radius: 5px;
+}
+QListWidget {
+	border: 2px solid #2980b9;
+    border-radius: 10px;
+}</string>
+  </property>
+  <widget class="QPushButton" name="Convertir">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>200</y>
+     <width>100</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Convertir</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="Base_A">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>95</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Binaire (2)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Octal (8)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Décimal (10)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hexadécimal (16)</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="Base_B">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>95</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <item>
+    <property name="text">
+     <string>Binaire (2)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Octal (8)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Décimal (10)</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hexadécimal (16)</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="Permuter">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>200</y>
+     <width>100</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Permuter</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Effacer">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>200</y>
+     <width>100</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Effacer</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inp1">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>180</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="inp2">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>10</y>
+     <width>180</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="historyList">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>5</y>
+     <width>150</width>
+     <height>240</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Sauvfile">
+   <property name="geometry">
+    <rect>
+     <x>548</x>
+     <y>20</y>
+     <width>50</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sauvg</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Clear">
+   <property name="geometry">
+    <rect>
+     <x>548</x>
+     <y>170</y>
+     <width>50</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>C</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
