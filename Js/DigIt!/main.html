@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="icons/logo.webp" type="image/webp" />
+    <title>Dig It! - Version 3.1.0 📖🚀</title>
+  </head>
+  <body>
+    <!-- Sound button for muting/unmuting sounds -->
+    <button class="sound top-right" onclick="window.toggleSound()">
+      <img src="icons/volume-high.svg" alt="Sound On" class="sound-icon" />
+      <img
+        src="icons/volume-xmark.svg"
+        alt="Sound Off"
+        class="sound-icon hidden"
+      />
+    </button>
+    <div class="container">
+      <div class="patch-notes">
+        <h3>Patch Notes</h3>
+        <ul>
+          <li>
+            <b>Version 3.1.0 📖📈</b><br />📖 Added a small tutorial at the
+            beginning of the game <br />🚀 Improved early game progression
+            <br />📈 Improved Taxing (caps at 60% now)
+          </li>
+          <br />
+          <li>
+            <b>Version 3.0.0 🌍🌪️</b><br />
+            <b>✨ New Features</b>
+            <ul>
+              💸 Progressive Tax System
+              <br />⚡ Hyper-Optimized Performance
+              <br />🕹️ Many Quality of Life Improvements
+              <br />🎨 Improved UIX
+              <br />🗂️ Sorting Inventory
+              <br />☄️ New Ores and Items
+              <br />➕ And much more!
+            </ul>
+            <br />
+            <b>🍀 Gameplay Tweaks</b>
+            <ul>
+              🔊 Sound Design Overhaul
+              <br />🔢 Number Formatting
+            </ul>
+            <br />
+            <b>🐞 Bug Fixes</b>
+            <ul>
+              A LOT of bug fixes... bugs are gone! 🐛🔫 hopefully
+            </ul>
+          </li>
+          <br />
+          <li><b>Version 2.2.2 🎨:</b> Major improvements to the UIX.</li>
+          <br />
+          <li>
+            <b>Version 2.1.2 🍀🐞:</b> Reworked luck system due to not working
+            as intended and some other minor bugs.
+          </li>
+          <br />
+          <li>
+            <b>Version 2.1.1 🔄:</b> Added a button to reset progress if you got
+            stuck or bored with a confirmation sequence
+          </li>
+          <br />
+          <li>
+            <b>Version 2.0.1 ⛏🐞:</b> Fixed game breaking bug where you couldn't
+            even dig for ores and some other minor bugs.
+          </li>
+          <br />
+          <li>
+            <b>Version 2.0.0 🍀:</b> Revamped the losing game mechanic, added a
+            new luck upgrade to the game so it's easier to get the more rare
+            ores and improved the ui with new emojies 👍.
+          </li>
+          <br />
+          <li>
+            <b>Version 1.3.1:</b> Added the new most common ore "<span
+              style="color: grey"
+              >⬜Stone</span
+            >" and many new rarity colors.
+          </li>
+          <br />
+          <li>
+            <b>Version 1.2.1:</b> Added a maximum number of 1000 quick digs at a
+            time due to performance issues.
+          </li>
+          <br />
+          <li>
+            <b>Version 1.2.0:</b> Improved customer offer system with periodic
+            rerolling and faster reroll on rejection.
+          </li>
+          <br />
+          <li>
+            <b>Version 1.1.0:</b> Added quick dig feature and more ores and
+            customer items.
+          </li>
+          <br />
+          <li>
+            <b>Version 1.0.0:</b> Initial release with basic digging and
+            customer interaction mechanics.
+          </li>
+        </ul>
+      </div>
+      <div class="game-area">
+        <div class="dig-area" id="digZone">
+          <span id="pickaxe">⛏</span> Dig Here
+        </div>
+        <div class="inventory">
+          <h3>🎒 Inventory:</h3>
+          <button onclick="sortInventory()" class="sort-button">
+            ↕️ Sort Inventory
+          </button>
+          <div id="inventory"></div>
+        </div>
+      </div>
+      <div class="side-panel">
+        <p>💰 : $<span id="gold">750</span></p>
+
+        <div class="customer" id="customer"></div>
+        <div class="button-container">
+          <button class="sell-button" onclick="sellOres()">
+            💸 Sell ($<span id="Total">0</span>)
+            <span id="taxRateDisplay"></span>
+          </button>
+          <button onclick="buyLuckUpgrade()" class="luck-upgrade">
+            🍀 Buy Luck Upgrade (<span id="luckUpgradeCost">$500</span>)
+          </button>
+          <button onclick="buyGear()" id="fake-det" class="fake-detector">
+            🔎 Buy Fake Detector ($10M)
+          </button>
+          <input
+            type="number"
+            id="quickDigBudget"
+            placeholder="Enter budget for quick dig (🚨 costs more than regular dig)"
+          />
+          <button
+            onclick="quickDig(document.getElementById('quickDigBudget').value)"
+            class="quick-dig"
+          >
+            ⚡ Quick Dig
+          </button>
+          <div id="indexDisplay" class="index-panel"></div>
+        </div>
+      </div>
+      <button class="reset-button" onclick="confirmResetGame()">
+        🔄 Reset Game
+      </button>
+    </div>
+    <!--Import the Howler.js library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <!--Main game scripts-->
+    <script src="game.js" type="module"></script>
+  </body>
+</html>
