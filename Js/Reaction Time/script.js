@@ -54,20 +54,24 @@ function categorizeSpeed(reactionTime) {
   let category;
 
   switch (true) {
-    case reactionTime < 100:
+    case reactionTime < 50:
+      category =
+        "*Konck *Knock      Hey, it's me Goku i heard you're very strong!";
+      break;
+    case reactionTime >= 50 && reactionTime < 100:
       category = "WAIT WHAT! HOW!? Are you the flash or something?";
       break;
     case reactionTime >= 100 && reactionTime < 150:
       category = "Stand Proud Human You Are Fast!";
       break;
     case reactionTime >= 150 && reactionTime < 200:
-      category = "Not too shabby! But could you beat a turtle on caffeine?";
+      category = "Not too shabby! You're faster than most people!";
       break;
     case reactionTime >= 200 && reactionTime < 280:
       category = "The average human reaction time is approximately 250ms";
       break;
     case reactionTime >= 280 && reactionTime < 400:
-      category = "Kinda slow. Did you just wake up from a nap or what?";
+      category = "Kinda slow... but you're not the slowest!";
       break;
     case reactionTime >= 400 && reactionTime < 1000:
       category = "Is your internet lagging? Oh, my bad—this site is offline!";
@@ -99,11 +103,11 @@ function Start() {
   function getRandomInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  const timer = getRandomInRange(50, 50);
+  const timer = getRandomInRange(1000, 3000);
 
   setTimeout(() => {
     const element3 = document.getElementById("body1");
-    element3.style.backgroundColor = "cyan";
+    element3.style.backgroundColor = "hsl(160, 60%, 65%)"; // cool green that won't make you blind
 
     startTimer();
   }, timer);
@@ -147,9 +151,10 @@ function displayHistory() {
     const listItem = document.createElement("li");
     listItem.style.color = score > 280 ? "red" : "green"; // better than if
 
-    const scoreText = document.createTextNode(score);
-    listItem.appendChild(scoreText); // add score text to list item
-    historyList.appendChild(listItem); // add list item to the history list
+    const scoreText = `${score} ms`; // create the string with the score and 'ms' text
+    const scoreTextNode = document.createTextNode(scoreText); // create a text node from the string
+    listItem.appendChild(scoreTextNode); // append the text node to the list item
+    historyList.appendChild(listItem); // append the list item to the history list
   });
 }
 
@@ -173,9 +178,9 @@ function UpdateTop(score) {
 function displayTopScores() {
   const topScores = JSON.parse(localStorage.getItem("TopScores")) || [0, 0, 0];
 
-  document.getElementById("n1").textContent = `#1: ${topScores[0] || 0}`;
-  document.getElementById("n2").textContent = `#2: ${topScores[1] || 0}`;
-  document.getElementById("n3").textContent = `#3: ${topScores[2] || 0}`;
+  document.getElementById("n1").textContent = `#1: ${topScores[0] || 0} ms`;
+  document.getElementById("n2").textContent = `#2: ${topScores[1] || 0} ms`;
+  document.getElementById("n3").textContent = `#3: ${topScores[2] || 0} ms`;
 }
 
 function clearTopScores() {

@@ -124,21 +124,43 @@ body {
   background-color: #ffaa00; /* Gold */
   color: black;
 }
-
 .quick-dig:hover {
   background-color: #e09900;
   transform: scale(0.99);
+}
+.quick-dig:active {
+  transform: scale(0.97);
+}
+.max {
+  padding: 4px 8px;
+  font-size: 0.8em;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.max:hover {
+  background-color: #545a61;
+  transform: scale(0.99);
+}
+.max:active {
+  transform: scale(0.97);
 }
 
 .luck-upgrade {
   background-color: #28a745; /* Green */
   color: white;
 }
-
 .luck-upgrade:hover {
   background-color: #218838;
   transform: scale(0.99);
 }
+.luck-upgrade:active {
+  transform: scale(0.97);
+}
+
 .fake-detector {
   background-color: #007bff; /* Blue */
   color: white;
@@ -147,14 +169,20 @@ body {
   background-color: #0056b3;
   transform: scale(0.99);
 }
+.fake-detector:active {
+  transform: scale(0.97);
+}
+
 .sell-button {
   background-color: #dc3545; /* Red */
   color: white;
 }
-
 .sell-button:hover {
   background-color: #c82333;
   transform: scale(0.99);
+}
+.sell-button:active {
+  transform: scale(0.97);
 }
 
 .disabled-button {

@@ -42,7 +42,9 @@ def Base(a):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("Base_A_a_Base_B.ui", self)
+        
+        uic.loadUi(r"C:\Studies\Portfolio\Py\Base\Base_A_a_Base_B.ui", self)
+
         
         self.Convertir.clicked.connect(self.Convert)
         self.Permuter.clicked.connect(self.Permut)
@@ -89,7 +91,7 @@ class MainWindow(QMainWindow):
         self.inp2.setText("")
         
     def sauvgfichier(self):
-        with open("Convertission.txt", "w", encoding="utf-8") as f:
+        with open("Py\Base\Convertission.txt", "w", encoding="utf-8") as f:
             for i in range(self.history_widget.count()):
                 f.write(self.history_widget.item(i).text() + "\n")
     

@@ -3,7 +3,6 @@ import { playSound } from "./sfx/sfx.js";
 //TODO:
 //_____________________________________________________________________________________
 //PRIORITIES
-//fix yo shit
 
 // Add an auto sale feature for ores
 
@@ -27,7 +26,7 @@ let gameState = {
   wealthIndex: 750, // Combines gold + inventory value
   stats: {
     totalOresDug: 0,
-    discoveredOres: new Set(), // Stores ore names
+    discoveredOres: [],
     totalProfit: 0,
     deepestDig: 0,
     luckiestFind: { ore: null, rarity: Infinity },
@@ -271,7 +270,7 @@ document.getElementById("digZone").addEventListener("click", () => {
 // Quick Dig Mechanic
 function quickDig(budget) {
   let costPerDig = 100;
-  if (gameState.gold < 50000) {
+  if (gameState.lifetimeEarnings < 20000) {
     costPerDig = 60;
   }
   const maxDigs = 500000;
@@ -318,6 +317,12 @@ function quickDig(budget) {
   saveGame();
 }
 
+function insertMaxBudget() {
+  const inp = document.getElementById("quickDigBudget");
+  const gold = gameState.gold;
+
+  inp.value = Math.floor(gold / 100) * 100;
+}
 // Sell All Ores
 
 function sellOres() {
@@ -467,17 +472,18 @@ function buyItem() {
     const fakeSaleValue = Math.floor(Math.random() * Math.floor(value * 0.2));
     alert("It's a fake! You lost $" + formatNumber(value - fakeSaleValue));
     gameState.gold += fakeSaleValue;
-    updateCustomerStats((success = false));
+    updateCustomerStats(false);
   } else {
     const profit = value * 2;
     alert("You made a profit! You gained $" + formatNumber(profit));
     gameState.gold += profit;
-    updateCustomerStats((success = true));
+    updateCustomerStats(true);
   }
 
   gameState.currentCustomer = null;
   updateGold();
   document.getElementById("customer").innerHTML = "";
+  updateIndex();
   saveGame();
   customerPlaceHolder();
 }
@@ -490,10 +496,10 @@ function rejectOffer() {
 
   gameState.currentCustomer = null;
   document.getElementById("customer").innerHTML = "";
-
-  updateCustomerStats((success = "rejected"));
-  saveGame();
   spawnCustomer(); // Immediately spawn a new customer
+  updateCustomerStats("rejected");
+  updateIndex();
+  saveGame();
 }
 
 // Function to get color based on rarity
@@ -678,7 +684,7 @@ function getAdjustedOres() {
     if (adjustedRarity > 0.5) {
       adjustedRarity = Math.max(
         0.5,
-        adjustedRarity * (1 - 0.05 * (gameState.luck - 1)) 
+        adjustedRarity * (1 - 0.05 * (gameState.luck - 1))
       );
     } else {
       adjustedRarity = Math.min(
@@ -781,67 +787,79 @@ function resetGame() {
 }
 
 function saveGame() {
-  localStorage.setItem("gameState", JSON.stringify(gameState));
-  console.log("Game Saved:", gameState);
+  // Convert Set to Array for saving
+  const saveState = {
+    ...gameState,
+    stats: {
+      ...gameState.stats,
+      discoveredOres: Array.from(gameState.stats.discoveredOres),
+    },
+  };
+  localStorage.setItem("gameState", JSON.stringify(saveState));
 }
 
 function loadGame() {
   const savedGame = localStorage.getItem("gameState");
   const firstTime = !localStorage.getItem("tutorialShown");
 
-  // Run tutorial if first time
-  if (firstTime) {
-    runTutorial();
-    localStorage.setItem("tutorialShown", "true");
-  }
-
   try {
+    // Default empty state
+    let parsed = {
+      gold: 750,
+      inventory: {},
+      gear: [],
+      currentCustomer: null,
+      luck: 1,
+      luckUpgrades: 0,
+      lifetimeEarnings: 0,
+      wealthIndex: 750,
+      stats: {
+        totalOresDug: 0,
+        discoveredOres: [],
+        totalProfit: 0,
+        deepestDig: 0,
+        luckiestFind: { ore: null, rarity: Infinity },
+        customerDeals: { total: 0, successful: 0, failed: 0 },
+      },
+    };
+
+    // Merge with saved data if exists
     if (savedGame) {
-      const parsed = JSON.parse(savedGame);
-
-      // Migrate old inventory format
-      if (Array.isArray(parsed.inventory)) {
-        parsed.inventory = parsed.inventory.reduce((acc, ore) => {
-          const key = ore.name;
-          acc[key] = acc[key] || { count: 0, ore };
-          acc[key].count++;
-          return acc;
-        }, {});
-      }
-
-      // Calculate wealth index if missing
-      if (typeof parsed.wealthIndex !== "number") {
-        const inventoryValue = Object.values(parsed.inventory || {}).reduce(
-          (sum, { ore, count }) => sum + (ore?.value || 0) * (count || 0),
-          0
-        );
-        parsed.wealthIndex = (parsed.gold || 750) + inventoryValue;
-      }
-
-      // Set default values for new properties
-      gameState = {
-        gold: 750,
-        inventory: {},
-        gear: [],
-        currentCustomer: null,
-        luck: 1,
-        luckUpgrades: 0,
-        lifetimeEarnings: 0,
-        wealthIndex: 750, // Default starting value
-        // Merge saved data
+      parsed = {
         ...parsed,
-        // Ensure critical numbers
-        lifetimeEarnings: parsed.lifetimeEarnings || 0,
-        wealthIndex: parsed.wealthIndex || 300,
+        ...JSON.parse(savedGame),
+        stats: {
+          ...parsed.stats,
+          ...(JSON.parse(savedGame).stats || {}),
+          discoveredOres: JSON.parse(savedGame).stats?.discoveredOres || [],
+          customerDeals:
+            JSON.parse(savedGame).stats?.customerDeals ||
+            parsed.stats.customerDeals,
+        },
       };
-
-      // Backward compatibility fixes
-      if (!Array.isArray(gameState.gear)) {
-        gameState.gear = [];
-      }
     }
+
+    // Convert legacy inventory format (array -> object)
+    if (Array.isArray(parsed.inventory)) {
+      parsed.inventory = parsed.inventory.reduce((acc, ore) => {
+        const key = ore.name;
+        acc[key] = acc[key] || { count: 0, ore };
+        acc[key].count++;
+        return acc;
+      }, {});
+    }
+
+    // Convert discoveredOres array to Set
+    parsed.stats.discoveredOres = new Set(parsed.stats.discoveredOres);
+
+    // Ensure numeric values
+    parsed.stats.luckiestFind.rarity =
+      Number(parsed.stats.luckiestFind.rarity) || Infinity;
+
+    // Update game state
+    gameState = parsed;
   } catch (e) {
-    console.error("Failed to load save:", e);
+    console.error("Corrupted save - Resetting game", e);
     localStorage.removeItem("gameState");
     gameState = {
       gold: 750,
@@ -852,30 +870,39 @@ function loadGame() {
       luckUpgrades: 0,
       lifetimeEarnings: 0,
       wealthIndex: 750,
+      stats: {
+        totalOresDug: 0,
+        discoveredOres: new Set(),
+        totalProfit: 0,
+        deepestDig: 0,
+        luckiestFind: { ore: null, rarity: Infinity },
+        customerDeals: { total: 0, successful: 0, failed: 0 },
+      },
     };
   }
 
   // Update UI components
   updateInventory();
   updateGold();
+  updateIndex();
 
-  // Handle fake detector UI
+  // Migrate old saves to new format
+  saveGame();
+
+  // Handle fake detector UI state
   const fakeDetectorButton = document.getElementById("fake-det");
   if (fakeDetectorButton) {
     if (gameState.gear.includes("Fake Detector")) {
       fakeDetectorButton.innerHTML = "✅ Bought";
       fakeDetectorButton.disabled = true;
       fakeDetectorButton.classList.add("disabled-button");
-    } else {
-      fakeDetectorButton.innerHTML = "🔎 Buy Fake Detector ($10M)";
-      fakeDetectorButton.disabled = false;
-      fakeDetectorButton.classList.remove("disabled-button");
     }
   }
 
-  // Initialize wealth index if missing
-  if (typeof gameState.wealthIndex !== "number") {
-    updateWealthIndex();
+  // Run tutorial if first time
+  if (!localStorage.getItem("tutorialShown")) {
+    runTutorial();
+    localStorage.setItem("tutorialShown", "true");
   }
 }
 
@@ -933,7 +960,7 @@ function updateIndex() {
   }</p>
       <p>💰 Lifetime Profit: $${formatNumber(gameState.stats.totalProfit)}</p>
       <p>🍀 Luckiest Find: ${gameState.stats.luckiestFind.ore || "None"} 
-         (${(1 / gameState.stats.luckiestFind.rarity).toFixed(0)}:1)</p>
+   (1:${formatNumber(1 / gameState.stats.luckiestFind.rarity)})</p>
       <p>🤝 Customer Deals: ${gameState.stats.customerDeals.successful}✅ / 
          ${gameState.stats.customerDeals.failed}❌</p>
     </div>
@@ -959,6 +986,7 @@ function buyLuckUpgrade() {
     gameState.luck += 1; // 100% luck boost per upgrade
     gameState.luckUpgrades += 1;
     updateGold();
+    updateIndex();
     saveGame();
   } else {
     alert("Not enough gold!");
@@ -1018,9 +1046,10 @@ function updateCustomerStats(success) {
 function handleOreFound(ore) {
   gameState.stats.totalOresDug++;
 
-  // Track discovered ores
-  if (!gameState.stats.discoveredOres.has(ore.name)) {
-    gameState.stats.discoveredOres.add(ore.name);
+  // Track discovered ores (using array for Set conversion)
+  const oreName = ore.name;
+  if (!gameState.stats.discoveredOres.has(oreName)) {
+    gameState.stats.discoveredOres.add(oreName);
   }
 
   // Track rarest find
@@ -1048,3 +1077,4 @@ window.toggleSound = toggleSound;
 window.sortInventory = sortInventory;
 window.rejectOffer = rejectOffer;
 window.buyItem = buyItem;
+window.insertMaxBudget = insertMaxBudget;
