@@ -2,7 +2,9 @@ import { playSound } from "./sfx/sfx.js";
 
 //TODO:
 //_____________________________________________________________________________________
-//PRIORITIES
+//🚨IMPORTANT!🚨
+//GAME ABONDEDNED DUE TO BEING VERY LUCK BASED(game of chance) WHILE HAVING TAX SYSTEMS AND GHARAR
+//UNLESS I DECIDED TO CHANGE THOSE STUFF I AINT GONNA WORK ON THIS
 
 // Add an auto sale feature for ores
 
@@ -202,7 +204,7 @@ const customerItems = [
   { name: "💎 Gem", value: 50, isFake: true },
   { name: "🔮 Rare Artifact", value: 500, isFake: true },
   { name: "🎁 Mystery Box", value: 1000, isFake: true },
-  { name: "🗿 Golden Idol", value: 2000, isFake: true },
+  { name: "🧭 Ancient Relic", value: 2000, isFake: true },
   { name: "📿 Antique Amulet", value: 3000, isFake: true },
   { name: "📜 Ancient Scroll", value: 4000, isFake: true },
   { name: "🗡️ Archaic Sword", value: 5000, isFake: true },
@@ -215,7 +217,7 @@ const customerItems = [
   { name: "💉 Ancient Elixir", value: 35000, isFake: true },
   { name: "🗺️ Treasure Map", value: 40000, isFake: true },
   { name: "🕰️ Timepiece", value: 45000, isFake: true },
-  { name: "🔮 Crystal Ball", value: 50000, isFake: true },
+  { name: "✒ Signed Ball", value: 50000, isFake: true },
   { name: "🖼 Davinci Painting", value: 100000, isFake: true },
 ];
 

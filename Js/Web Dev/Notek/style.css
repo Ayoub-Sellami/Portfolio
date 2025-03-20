@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/bg.jpg") no-repeat center center/cover;
+  opacity: 0.5; /* Fade level */
+  z-index: -1;
+}
+
+.branch-bt {
+  background-color: #f4511e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 5px 0;
+}
