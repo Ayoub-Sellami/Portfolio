@@ -1,26 +1,59 @@
 body {
   margin: 0;
-  position: relative;
+  position: relative; /* needed for absolute positioning of ::before */
   min-height: 100vh;
 }
 
 body::before {
-  content: "";
+  content: ""; /* if the body has no content before it might collapse */
   position: absolute;
   inset: 0;
   background: url("assets/bg.jpg") no-repeat center center/cover;
-  opacity: 0.5; /* Fade level */
+  z-index: -1;
+  filter: blur(3px);
+}
+
+.Branch-bt {
+  padding: 0.8em 0.8em;
+  border-radius: 20px;
+  border: 2px solid #17c3b2;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: 0.3s;
+  z-index: 1;
+  font-family: inherit;
+}
+
+.Branch-bt a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+  display: block; /* Ensure <a> fills the button */
+}
+
+.Branch-bt::before {
+  content: "";
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: #17c3b2;
+  transition: 0.5s ease;
+  display: block;
   z-index: -1;
 }
 
-.branch-bt {
-  background-color: #f4511e;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  font-size: 20px;
-  padding: 10px 20px;
-  margin: 5px 0;
+.Branch-bt:hover::before {
+  width: 105%;
+}
+/* When hovering over the button, target <a> */
+.Branch-bt:hover a {
+  color: #111;
 }
