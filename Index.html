@@ -4,105 +4,69 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Development Portfolio</title>
-    <style>
-      :root {
-        --primary-color: #2c3e50;
-        --secondary-color: #3498db;
-        --background-color: #f8f9fa;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 20px;
-        background-color: var(--background-color);
-        color: var(--primary-color);
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      h1 {
-        color: var(--secondary-color);
-        text-align: center;
-        margin-bottom: 40px;
-      }
-
-      .project-section {
-        background: white;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
-
-      h2 {
-        color: var(--primary-color);
-        border-bottom: 2px solid var(--secondary-color);
-        padding-bottom: 5px;
-        margin-top: 0;
-      }
-
-      .project-list {
-        list-style-type: none;
-        padding: 0;
-      }
-
-      .project-list li {
-        margin: 15px 0;
-        padding: 10px;
-        border-left: 4px solid var(--secondary-color);
-        transition: transform 0.2s;
-      }
-
-      .project-list li:hover {
-        transform: translateX(10px);
-      }
-
-      a {
-        color: var(--secondary-color);
-        text-decoration: none;
-        font-weight: 500;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-
-      .note {
-        color: #e74c3c;
-        font-size: 0.9em;
-        margin-top: 5px;
-      }
-
-      footer {
-        text-align: center;
-        margin-top: 40px;
-        color: #666;
-      }
-    </style>
+    <!--The tab icon and my current logo-->
+    <link rel="icon" href="assets/icon.svg" type="image/svg" />
+    <!--linking to the stylesheet-->
+    <link rel="stylesheet" href="assets/Index_style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>Development Portfolio</h1>
-
+    <!--Navigation element-->
+    <nav>
+      <img src="assets/icon.svg" alt="" class="nav-ico" />
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#work">WORK</a></li>
+        <li><a href="#skills">SKILLS</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+    <!--Home element-->
+    <div class="container" id="#home">
+      <h1 class="intro">I am <span class="MyName">Ayoub</span></h1>
+    </div>
+    <!--Some of my Projects-->
+    <h1 class="title">Development Portfolio</h1>
+    <div class="container" id="work">
+      <!--Some JavaScript Games I made-->
       <section class="project-section">
         <h2>JavaScript Games</h2>
         <ul class="project-list">
           <li>
             <a href="JS/DigIt!/main.html">Digging Game</a>
             <p>A resource collection game with mining mechanics</p>
+            <div
+              class="image-container"
+              onclick="openPopup(this.querySelector('img').src)"
+            >
+              <!--choose the first img-->
+
+              <img
+                src="assets/digit.png"
+                alt="Project Preview"
+                class="project-img"
+              />
+              <img src="assets/eye-outline.svg" alt="" class="eye" />
+            </div>
           </li>
           <li>
             <a href="JS/Reaction Time/game.html">Reaction Time Test</a>
             <p>Measure your reaction speed with this interactive test</p>
+            <div
+              class="image-container"
+              onclick="openPopup(this.querySelector('img').src)"
+            >
+              <img
+                src="assets/reactiontime.png"
+                alt="Project Preview"
+                class="project-img"
+              />
+              <img src="assets/eye-outline.svg" alt="" class="eye" />
+            </div>
           </li>
         </ul>
       </section>
-
+      <!--Some JavaScript Websites I made-->
       <section class="project-section">
         <h2>Full Stack Projects</h2>
         <ul class="project-list">
@@ -119,6 +83,7 @@
       </section>
 
       <section class="project-section">
+        <!--Some Python Games I made-->
         <h2>Python Games</h2>
         <ul class="project-list">
           <li>
@@ -130,6 +95,7 @@
       </section>
 
       <section class="project-section">
+        <!--Some Python apps I made-->
         <h2>Python Applications</h2>
         <ul class="project-list">
           <li>
@@ -139,16 +105,42 @@
           </li>
         </ul>
       </section>
-
-      <footer>
-        <p>
-          View source code on
-          <a href="https://github.com/Ayoub-Sellami/Portfolio" target="_blank"
-            >GitHub</a
-          >
-        </p>
-        <p>© 2025 Ayoub Sellami. All rights reserved.</p>
-      </footer>
     </div>
+
+    <!--The about me element-->
+    <footer>
+      <p>
+        View source code on
+        <a href="https://github.com/Ayoub-Sellami/Portfolio" target="_blank"
+          >GitHub</a
+        >
+      </p>
+      <p>© 2025 Ayoub Sellami. All rights reserved.</p>
+    </footer>
+
+    <!--Place where images will popup when previewed-->
+    <div
+      id="imagePopup"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      "
+    >
+      <img
+        id="popupImg"
+        src=""
+        style="max-width: 80%; max-height: 80%; cursor: pointer"
+      />
+    </div>
+    <!--Script-->
+    <script src="assets/Index_script.js"></script>
   </body>
 </html>
